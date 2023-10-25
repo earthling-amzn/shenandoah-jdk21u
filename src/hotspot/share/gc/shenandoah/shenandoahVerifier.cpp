@@ -603,9 +603,13 @@ class ShenandoahVerifyNoIncompleteSatbBuffers : public ThreadClosure {
 public:
   virtual void do_thread(Thread* thread) {
     SATBMarkQueue& queue = ShenandoahThreadLocalData::satb_mark_queue(thread);
-    if (!queue.is_empty()) {
+    if (!is_empty(queue)) {
       fatal("All SATB buffers should have been flushed during mark");
     }
+  }
+private:
+  bool is_empty(SATBMarkQueue& queue) {
+    return queue.buffer() == nullptr || queue.index() == queue.capacity();
   }
 };
 
