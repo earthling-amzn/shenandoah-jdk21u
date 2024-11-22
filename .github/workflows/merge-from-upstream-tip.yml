@@ -28,7 +28,7 @@ jobs:
       - name: Fetch latest tag
         id: latest-tag
         run: |
-          git remote add upstream https://github.com/openjdk/jdk21u-dev.git
+          git remote add upstream https://github.com/openjdk/jdk21u.git
           git fetch upstream
           echo "latest=$(git tag --list --sort=-creatordate | head -1)" >> "$GITHUB_OUTPUT"
       - name: Reset the default branch with latest tag
@@ -49,6 +49,6 @@ jobs:
           # new branch to the remote fork (i.e. openjdk/shenandoah).
           # When this workflow runs in that repo, we can remove this.
           push-to-fork: ${{ github.repository }}
-          title: Merge openjdk/jdk21u-dev:master
+          title: Merge openjdk/jdk21u:master
           body: Merges tag ${{ steps.latest-tag.outputs.latest }}
 
